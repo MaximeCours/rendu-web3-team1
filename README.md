@@ -1,13 +1,17 @@
-# Sample Hardhat Project
+# Javascript Quiz Web3
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+## Requirements
 
-Try running some of the following tasks:
+- Node.js 20 or higher 
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+## Setup
+
+- Clone this repository
+- Setup the .env like the .env.example
+- Run `npm install` to install the dependencies in the root to update the contract
+- Run `npm install` inside frontend to install the dependencies for the frontend
+- Run `npm run dev` inside frontend to start the React app
+
+## Commands
+
+- `npx hardhat run scripts/deploy.js --network sepolia` to compile and deploy the contract

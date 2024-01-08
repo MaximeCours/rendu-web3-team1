@@ -17,8 +17,6 @@ contract JavaScriptQuiz {
         answerHash = _answerHash;
     }
 
-
-
     function answerQuiz(string memory _response) public {
         require(msg.sender != owner, "Owner cannot answer the quiz.");
         if (keccak256(abi.encodePacked(_response)) == answerHash) {
