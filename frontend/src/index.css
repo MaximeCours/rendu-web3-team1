@@ -5,3 +5,11 @@ body{
 .error{
   color: red;
 }
+
+
+
+.selected {
+  background-color: #4caf50; 
+  color: #fff; 
+  font-weight: bold; 
+}

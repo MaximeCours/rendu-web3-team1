@@ -3,10 +3,34 @@ import {ethers} from "ethers";
 import JavaScriptQuiz from "./contracts/JavaScriptQuiz.json"
 
 function App() {
+  const mockQuestions = [
+    {
+      statement: "Quelle est la valeur de la variable y après l'exécution de ce code ?",
+      answers: [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      statement: "Quelle est la valeur de la variable x après l'exécution de ce code ?",
+      answers: [
+        "7",
+        "9",
+        "2",
+        "4"
+      ]
+    },
+  
+  ]
+
+
   const [accounts, setAccounts] = useState([])
   const [contract, setContract] = useState(null)
-  const [question, setQuestion] = useState('')
-  const [answers, setAnswers] = useState([])
+  const [questions, setQuestions] = useState([])
+  const [selectedChoices, setSelectedChoices] = useState([]);
+  const [answers, setAnswers] = useState([]);
   const [input, setInput] = useState('')
   const [error, setError] = useState('')
 
@@ -43,44 +67,89 @@ function App() {
       const contract = new ethers.Contract(contractAddress, contractABI, signer)
       setContract(contract)
 
-      // On récupère les données du smart contract (Question et réponses)
-      const question = await contract.question()
-      let contractAnswers = []
-      for (let i = 0; i < 4; i++) {
-        contractAnswers.push(await contract.choices(i))
-      }
-      setAnswers(contractAnswers)
-      setQuestion(question)
+      loadQuestions()
     }catch (error){
       console.error(error)
     }
   }
 
-  async function handleSubmit() {
+  
+
+  const loadQuestions = async () => {
     try {
-      // On soumet la réponse de l'utilisateur au contrat
-      await contract.answerQuiz(input)
+     // const questionsCount = await contract.methods.getQuestionsCount().call();
+      const loadedQuestions = [];
+
+     // for (let i = 0; i < questionsCount; i++) {
+        //const [statement, answers] = await contract.methods.getQuestion(i).call();
+        //loadedQuestions.push({ statement, answers });
+     // }
+
+      //setQuestions(loadedQuestions);
+      setQuestions(mockQuestions);
+      setSelectedAnswers(new Array(loadedQuestions.length).fill(''));
+    } catch (error) {
+      console.error('Error loading questions:', error);
+    }
+  };
+
+  
+
+  const submitAnswers = async () => {
+    try {
+      //await contract.methods.submitAnswers(selectedAnswers).send({ from: 'YOUR_SENDER_ADDRESS' });
+      console.log('Answers submitted successfully!', answers);
+      alert(`Answers submitted successfully! : ${answers}`);
       setError('')
     } catch (error) {
       setError(error.reason)
+      console.error('Error submitting answers:', error);
     }
+  };
+  
+
+  const handleChoiceClick = (questionIndex, answerIndex) => {
+    const question = questions[questionIndex];
+    const answer = question.answers[answerIndex];
+
+    const newSelectedChoices = [...selectedChoices];
+    newSelectedChoices[questionIndex] = answerIndex;
+    setSelectedChoices(newSelectedChoices);
+console.log('selectedChoices', selectedChoices)
+    const newAnswers = [...answers];
+    newAnswers[questionIndex] = answer;
+    setAnswers(newAnswers);
+  };
+
+
+
+  function displayQuestions() {
+    return  questions.map((question, questionIndex) => (
+      <li key={questionIndex}>
+        <h3>Question {questionIndex + 1}</h3>
+        <p>{question.statement}</p>
+        <ul>
+          {question.answers.map((answer, answerIndex) => (
+            <li key={answerIndex}>
+              <button onClick={() => handleChoiceClick(questionIndex, answerIndex)}
+              className={selectedChoices[questionIndex] === answerIndex ? 'selected' : ''}>
+                {answer}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </li>
+    ))
   }
 
   return <>
-    <h2>Current account : {accounts[0]}</h2>
-    <h3>{question}</h3>
-    <ul>
-      {answers.map((answer, index) => (
-        <li key={index}>{answer}</li>
-      ))}
-    </ul>
-    <input
-        type="text"
-        placeholder="Your answer"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-    />
-    <button onClick={handleSubmit}>Submit</button>
+       <div>
+      <h1>Quiz App</h1>
+      <ul>
+        {displayQuestions()}
+      </ul>
+      <button onClick={submitAnswers}>Valider</button>
+    </div>
 
     {error && <p className="error">{error}</p>}
   </>
