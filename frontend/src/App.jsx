@@ -1,20 +1,20 @@
-import {useEffect, useState} from "react";
-import {ethers} from "ethers";
-import JavaScriptQuiz from "./contracts/JavaScriptQuiz.json"
-import Login from "./login";
+import { useEffect, useState } from "react";
+import { ethers } from "ethers";
+import JavaScriptQuiz from "./contracts/JavaScriptQuiz.json";
+import LoginScreen from "./screens/Login/LoginScreen.jsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [accounts, setAccounts] = useState([])
-  const [contract, setContract] = useState(null)
-  const [question, setQuestion] = useState('')
-  const [answers, setAnswers] = useState([])
-  const [input, setInput] = useState('')
-  const [error, setError] = useState('')
+  const [accounts, setAccounts] = useState([]);
+  const [contract, setContract] = useState(null);
+  const [question, setQuestion] = useState("");
+  const [answers, setAnswers] = useState([]);
+  const [input, setInput] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    initWeb3()
-  }, [])
+    initWeb3();
+  }, []);
 
   useEffect(() => {
     // Vérifier si l'utilisateur est connecté et mettre à jour l'état
@@ -24,7 +24,7 @@ function App() {
   }, [accounts]);
 
   useEffect(() => {
-    if (contract){
+    if (contract) {
       // On écoute les événements émis par le smart contract
       contract.on("CorrectAnswer", (details) => {
         alert("Bonne réponse : " + details);
@@ -36,68 +36,77 @@ function App() {
         console.log("Mauvaise réponse : ", details);
       });
     }
-  }, [contract])
+  }, [contract]);
 
-  async function initWeb3(){
+  async function initWeb3() {
     // On prépare la connexion au smart contract
-    const contractAddress = "0xE0cBcC25251Ab3888e008BB2E745767eaa2b8b5d"
-    const contractABI = JavaScriptQuiz.abi
+    const contractAddress = "0xE0cBcC25251Ab3888e008BB2E745767eaa2b8b5d";
+    const contractABI = JavaScriptQuiz.abi;
 
     try {
       // On se connecte au wallet de l'utilisateur
-      const accounts = await window.ethereum.request({method: "eth_requestAccounts"})
-      setAccounts(accounts)
-      const provider = new ethers.BrowserProvider(window.ethereum)
-      const signer = await provider.getSigner()
-      const contract = new ethers.Contract(contractAddress, contractABI, signer)
-      setContract(contract)
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      setAccounts(accounts);
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        signer
+      );
+      setContract(contract);
 
       // On récupère les données du smart contract (Question et réponses)
-      const question = await contract.question()
-      let contractAnswers = []
+      const question = await contract.question();
+      let contractAnswers = [];
       for (let i = 0; i < 4; i++) {
-        contractAnswers.push(await contract.choices(i))
+        contractAnswers.push(await contract.choices(i));
       }
-      setAnswers(contractAnswers)
-      setQuestion(question)
-    }catch (error){
-      console.error(error)
+      setAnswers(contractAnswers);
+      setQuestion(question);
+    } catch (error) {
+      console.error(error);
     }
   }
 
   async function handleSubmit() {
     try {
       // On soumet la réponse de l'utilisateur au contrat
-      await contract.answerQuiz(input)
-      setError('')
+      await contract.answerQuiz(input);
+      setError("");
     } catch (error) {
-      setError(error.reason)
+      setError(error.reason);
     }
   }
 
-  return <>
-  {isLoggedIn ? (
+  return (
     <>
-    <h2>Current account : {accounts[0]}</h2>
-    <h3>{question}</h3>
-    <ul>
-      {answers.map((answer, index) => (
-        <li key={index}>{answer}</li>
-      ))}
-    </ul>
-    <input
-        type="text"
-        placeholder="Your answer"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-    />
-    <button onClick={handleSubmit}>Submit</button>
+      {isLoggedIn ? (
+        <>
+          <h2>Current account : {accounts[0]}</h2>
+          <h3>{question}</h3>
+          <ul>
+            {answers.map((answer, index) => (
+              <li key={index}>{answer}</li>
+            ))}
+          </ul>
+          <input
+            type="text"
+            placeholder="Your answer"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <button onClick={handleSubmit}>Submit</button>
 
-    {error && <p className="error">{error}</p>}
-    </> )    : (
-      <Login onLogin={() => setIsLoggedIn(true)} />
-    )}
-  </>
+          {error && <p className="error">{error}</p>}
+        </>
+      ) : (
+        <LoginScreen onLogin={() => setIsLoggedIn(true)} />
+      )}
+    </>
+  );
 }
 
-export default App
+export default App;
