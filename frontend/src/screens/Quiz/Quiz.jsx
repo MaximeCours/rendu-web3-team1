@@ -1,7 +1,6 @@
-// Quiz.jsx
-
-import React, { useEffect, useState } from "react";
-import useContract from "./ContractLogic";
+import { useEffect, useState } from "react";
+import useContract from "../../hooks/useContract.js";
+import "./quiz.css";
 
 const Quiz = () => {
   const { accounts, contract, loadQuestions, submitAnswers } = useContract();
@@ -28,9 +27,9 @@ const Quiz = () => {
     const newSelectedChoices = [...selectedChoices];
     newSelectedChoices[questionIndex] = answerIndex;
     setSelectedChoices(newSelectedChoices);
-    
+
     const question = questions[questionIndex];
-    const answer   = question.answers[answerIndex];
+    const answer = question.answers[answerIndex];
     const newAnswers = [...answers];
     newAnswers[questionIndex] = answer;
     setAnswers(newAnswers);
@@ -56,7 +55,11 @@ const Quiz = () => {
             <li key={answerIndex}>
               <button
                 onClick={() => handleChoiceClick(questionIndex, answerIndex)}
-                className={selectedChoices[questionIndex] === answerIndex ? "selected" : ""}
+                className={
+                  selectedChoices[questionIndex] === answerIndex
+                    ? "selected"
+                    : ""
+                }
               >
                 {answer}
               </button>

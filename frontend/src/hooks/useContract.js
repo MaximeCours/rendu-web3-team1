@@ -1,8 +1,6 @@
-// ContractLogic.js
-
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import JavaScriptQuiz from "./contracts/JavaScriptQuiz.json";
+import JavaScriptQuiz from "../contracts/JavaScriptQuiz.json";
 
 const useContract = () => {
   const [accounts, setAccounts] = useState([]);
@@ -16,11 +14,17 @@ const useContract = () => {
 
       try {
         // On se connecte au wallet de l'utilisateur
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
         setAccounts(accounts);
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
-        const contract = new ethers.Contract(contractAddress, contractABI, signer);
+        const contract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer
+        );
         setContract(contract);
       } catch (error) {
         console.error(error);
@@ -34,11 +38,13 @@ const useContract = () => {
     try {
       const loadedQuestions = [
         {
-          statement: "Quelle est la valeur de la variable y après l'exécution de ce code ?",
+          statement:
+            "Quelle est la valeur de la variable y après l'exécution de ce code ?",
           answers: ["1", "2", "3", "4"],
         },
         {
-          statement: "Quelle est la valeur de la variable x après l'exécution de ce code ?",
+          statement:
+            "Quelle est la valeur de la variable x après l'exécution de ce code ?",
           answers: ["7", "9", "2", "4"],
         },
       ];
