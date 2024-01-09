@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
 import {ethers} from "ethers";
 import JavaScriptQuiz from "./contracts/JavaScriptQuiz.json"
+import Login from "./login";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [accounts, setAccounts] = useState([])
   const [contract, setContract] = useState(null)
   const [question, setQuestion] = useState('')
@@ -13,6 +15,13 @@ function App() {
   useEffect(() => {
     initWeb3()
   }, [])
+
+  useEffect(() => {
+    // Vérifier si l'utilisateur est connecté et mettre à jour l'état
+    if (accounts && accounts.length > 0) {
+      setIsLoggedIn(true);
+    }
+  }, [accounts]);
 
   useEffect(() => {
     if (contract){
@@ -67,6 +76,8 @@ function App() {
   }
 
   return <>
+  {isLoggedIn ? (
+    <>
     <h2>Current account : {accounts[0]}</h2>
     <h3>{question}</h3>
     <ul>
@@ -83,6 +94,9 @@ function App() {
     <button onClick={handleSubmit}>Submit</button>
 
     {error && <p className="error">{error}</p>}
+    </> )    : (
+      <Login onLogin={() => setIsLoggedIn(true)} />
+    )}
   </>
 }
 
