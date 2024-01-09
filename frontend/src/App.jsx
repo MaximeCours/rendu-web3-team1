@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import Quiz from "./Quiz";
 import JavaScriptQuiz from "./contracts/JavaScriptQuiz.json";
 import LoginScreen from "./screens/Login/LoginScreen.jsx";
 
@@ -159,24 +160,7 @@ console.log('selectedChoices', selectedChoices)
   return (
     <>
       {isLoggedIn ? (
-        <>
-          <h2>Current account : {accounts[0]}</h2>
-          <h3>{question}</h3>
-          <ul>
-            {answers.map((answer, index) => (
-              <li key={index}>{answer}</li>
-            ))}
-          </ul>
-          <input
-            type="text"
-            placeholder="Your answer"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <button onClick={handleSubmit}>Submit</button>
-
-          {error && <p className="error">{error}</p>}
-        </>
+          <Quiz />
       ) : (
         <LoginScreen onLogin={() => setIsLoggedIn(true)} />
       )}
@@ -184,4 +168,4 @@ console.log('selectedChoices', selectedChoices)
   );
 }
 
-export default App;
+export default App
