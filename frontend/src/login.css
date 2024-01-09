@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');  
+  .login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Space Mono', monospace;
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+  }
+  
+  .left-panel {
+    width: 65%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(146, 245, 204);
+  }
+  
+  .right-panel {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .metamask-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 22px;
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #2c2c2c; 
+    border: 1px solid rgb(37, 37, 37);
+    border-radius: 8px;
+    transition: 1s;
+    width: fit-content;
+    &:hover {
+        background-color: #191919;
+        color: #ffffff;
+    }
+
+    @media (max-width: 1024px) {
+        margin: 20px;
+        font-size: 20px;
+    }
+  }
+  
+  .metamask-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .get-metamask {
+    color: #232323;
+    font-size: 16px;
+  }
+
+  .get-metamask-link {
+    color: #353535;
+    text-decoration: underline;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .left-panel,
+    .right-panel {
+      width: 100%;
+    }
+
+    .left-panel {
+        height: 36%;
+    }
+
+    .left-panel img {
+        width: auto;
+        height: 100%;
+    }
+
+    .right-panel {
+        height: 70%;
+    }
+
+  }
+  
