@@ -1,0 +1,35 @@
+.question-container {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+  
+.question-text {
+    color: #333;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+  
+.options-container {
+    display: flex;
+    flex-direction: column;
+}
+  
+.option {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+  
+.option:hover {
+    background-color: #f0f0f0;
+}
+  
+.selected {
+    background-color: #4caf50;
+    color: #fff;
+}
