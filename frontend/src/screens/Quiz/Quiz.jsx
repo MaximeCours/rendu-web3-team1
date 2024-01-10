@@ -73,7 +73,7 @@ const Quiz = () => {
 
   return (
     <>
-      <div>
+      <div className="quiz">
         <h1>Quiz App</h1>
         <ul>{displayQuestions()}</ul>
         <button className="submit" onClick={handleSubmitAnswers}>Valider</button>
