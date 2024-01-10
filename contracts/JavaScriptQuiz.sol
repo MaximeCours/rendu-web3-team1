@@ -8,7 +8,7 @@ contract JavaScriptQuiz {
 
     Quiz[] public quizzes;
 
-    bytes32 private answerHash;
+    bytes32[] private answerHash;
     address private owner;
 
     event CorrectAnswer(address responder);
