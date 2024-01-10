@@ -31,7 +31,7 @@ function App() {
 
   async function initWeb3(){
     // On prépare la connexion au smart contract
-    const contractAddress = "0xE0cBcC25251Ab3888e008BB2E745767eaa2b8b5d"
+    const contractAddress = "0xc84878373ce21305f37f071a0Bf1F5853d102Fce"
     const contractABI = JavaScriptQuiz.abi
 
     try {
@@ -60,6 +60,7 @@ function App() {
     try {
       // On soumet la réponse de l'utilisateur au contrat
       await contract.answerQuiz(input)
+      console.log("Answer submitted : ", input)
       setError('')
     } catch (error) {
       setError(error.reason)
