@@ -1,17 +1,17 @@
 import React from 'react';
-import './QuizResult.css'; // Importez le fichier CSS
+import './quiz-result.css';
 
 const QuizResult = ({ quizTitle, score, timeTaken }) => {
     return (
       <div className="quiz-completed-screen">
         <div className="content">
-          <h2>{`Félicitations ! Vous avez complété la leçon`}</h2>
+          <h2>Félicitations ! Vous avez complété la leçon</h2>
           <p className="quiz-title">{quizTitle}</p>
   
           <div className="info-container">
             <div className="info-box green">
               <h3>Score</h3>
-              <p className="info-value">{score} %</p>
+              <p className="info-value">{`${score} %`}</p>
             </div>
   
             <div className="info-box purple">
