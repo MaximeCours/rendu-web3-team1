@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import LoginScreen from "./screens/Login/LoginScreen.jsx";
 import Quiz from "./screens/Quiz/Quiz.jsx";
 import useContract from "./hooks/useContract.js";
+import Modal from "./screens/modal/Modal.jsx";
 
 function App() {
-  const { contract, accounts } = useContract();
+  const { contract, accounts, isLoading } = useContract();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -31,6 +32,9 @@ function App() {
 
   return (
     <>
+     {isLoading && (
+        <Modal/>     
+      )}
       {isLoggedIn ? (
         <Quiz />
       ) : (

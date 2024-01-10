@@ -5,6 +5,7 @@ import JavaScriptQuiz from "../contracts/JavaScriptQuiz.json";
 const useContract = () => {
   const [accounts, setAccounts] = useState([]);
   const [contract, setContract] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const initWeb3 = async () => {
@@ -14,6 +15,8 @@ const useContract = () => {
 
       try {
         // On se connecte au wallet de l'utilisateur
+        setIsLoading(true);
+
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
@@ -26,7 +29,9 @@ const useContract = () => {
           signer
         );
         setContract(contract);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.error(error);
       }
     };
@@ -67,7 +72,7 @@ const useContract = () => {
     }
   };
 
-  return { accounts, contract, loadQuestions, submitAnswers };
+  return { accounts, contract, loadQuestions, submitAnswers, isLoading };
 };
 
 export default useContract;
