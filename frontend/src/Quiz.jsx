@@ -1,13 +1,10 @@
-// Quiz.jsx
-
 import React, { useEffect, useState } from "react";
 import useContract from "./ContractLogic";
 
 const Quiz = () => {
   const { accounts, contract, loadQuestions, submitAnswers } = useContract();
   const [questions, setQuestions] = useState([]);
-  const [selectedChoices, setSelectedChoices] = useState([]);
-  const [answers, setAnswers] = useState([]);
+  const [answersIndex, setAnswerIndex] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -25,21 +22,15 @@ const Quiz = () => {
   }, [contract]);
 
   const handleChoiceClick = (questionIndex, answerIndex) => {
-    const newSelectedChoices = [...selectedChoices];
-    newSelectedChoices[questionIndex] = answerIndex;
-    setSelectedChoices(newSelectedChoices);
-    
-    const question = questions[questionIndex];
-    const answer   = question.answers[answerIndex];
-    const newAnswers = [...answers];
-    newAnswers[questionIndex] = answer;
-    setAnswers(newAnswers);
+    const newAnswersIndex = [...answersIndex];
+    newAnswersIndex[questionIndex] = answerIndex;
+    setAnswerIndex(newAnswersIndex);
   };
 
   const handleSubmitAnswers = async () => {
     try {
-      await submitAnswers(answers);
-      alert(`Answers submitted successfully! ${answers}`);
+      await submitAnswers(answersIndex);
+      alert(`Answers submitted successfully! ${answersIndex}`);
       setError("");
     } catch (error) {
       setError(error.message);
@@ -50,13 +41,13 @@ const Quiz = () => {
     return questions.map((question, questionIndex) => (
       <li key={questionIndex}>
         <h3>Question {questionIndex + 1}</h3>
-        <p>{question.statement}</p>
+        <p>{question.question}</p>
         <ul>
-          {question.answers.map((answer, answerIndex) => (
+          {question.choices.map((answer, answerIndex) => (
             <li key={answerIndex}>
               <button
                 onClick={() => handleChoiceClick(questionIndex, answerIndex)}
-                className={selectedChoices[questionIndex] === answerIndex ? "selected" : ""}
+                className={answersIndex[questionIndex] === answerIndex ? "selected" : ""}
               >
                 {answer}
               </button>

@@ -1,5 +1,3 @@
-// ContractLogic.js
-
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import JavaScriptQuiz from "./contracts/JavaScriptQuiz.json";
@@ -32,17 +30,9 @@ const useContract = () => {
 
   const loadQuestions = async () => {
     try {
-      const loadedQuestions = [
-        {
-          statement: "Quelle est la valeur de la variable y après l'exécution de ce code ?",
-          answers: ["1", "2", "3", "4"],
-        },
-        {
-          statement: "Quelle est la valeur de la variable x après l'exécution de ce code ?",
-          answers: ["7", "9", "2", "4"],
-        },
-      ];
-
+      //get questions from the contract
+      const loadedQuestions = await contract.quizzes();
+      console.log("Questions loaded successfully!", loadedQuestions);
       return loadedQuestions;
     } catch (error) {
       console.error("Error loading questions:", error);
