@@ -8,6 +8,13 @@ module.exports = {
     sepolia:{
       url:process.env.API_URL,
       accounts:[`0x${process.env.PRIVATE_KEY}`]
+    },
+    localRes:{
+      url:process.env.API_URL,
+      accounts:[process.env.PRIVATE_KEY]
+    },
+    hardhat:{
+      chainId:31337
     }
   }
 };
