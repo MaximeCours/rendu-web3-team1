@@ -18,8 +18,8 @@ contract JavaScriptQuiz {
         owner = msg.sender;
         answerHash = _answerHash;
         quizzes.push(QuizLibrary.Quiz({
-            question: unicode"Qu'est-ce que le Web 3.0 ?",
-            choices: [
+            statement: unicode"Qu'est-ce que le Web 3.0 ?",
+            answers: [
         unicode"Une version améliorée du navigateur Internet Explorer.",
         unicode"Un réseau social populaire.",
         unicode"Un nouveau protocole de communication pour le courrier électronique.",
@@ -28,8 +28,8 @@ contract JavaScriptQuiz {
         }));
 
         quizzes.push(QuizLibrary.Quiz({
-            question: unicode"Quel est le principal objectif du Web 3.0 ?",
-            choices: [
+            statement: unicode"Quel est le principal objectif du Web 3.0 ?",
+            answers: [
         unicode"Améliorer la vitesse de connexion Internet.",
         unicode"Décentraliser les applications et les données.",
         unicode"Augmenter la résolution des écrans d'ordinateur.",
@@ -38,8 +38,8 @@ contract JavaScriptQuiz {
         }));
 
         quizzes.push(QuizLibrary.Quiz({
-            question: unicode"Qu'est-ce qu'un smart contract ?",
-            choices : [
+            statement: unicode"Qu'est-ce qu'un smart contract ?",
+            answers : [
         unicode"Un contrat intelligent entre deux entreprises.",
         unicode"Un document juridique traditionnel.",
         unicode"Un accord verbal entre parties contractantes.",
@@ -48,8 +48,8 @@ contract JavaScriptQuiz {
         }));
 
         quizzes.push(QuizLibrary.Quiz({
-            question: unicode"Comment fonctionne la décentralisation dans le contexte du Web 3.0 ?",
-            choices: [
+            statement: unicode"Comment fonctionne la décentralisation dans le contexte du Web 3.0 ?",
+            answers: [
         unicode"Les données sont réparties sur plusieurs nœuds sans contrôle central.",
         unicode"Toutes les données sont stockées sur un seul serveur.",
         unicode"Un seul utilisateur a le contrôle total du réseau.",
@@ -58,8 +58,8 @@ contract JavaScriptQuiz {
         }));
 
         quizzes.push(QuizLibrary. Quiz({
-            question : unicode"Comment fonctionne la décentralisation dans le contexte du Web 3.0 ?",
-            choices : [
+            statement : unicode"Comment fonctionne la décentralisation dans le contexte du Web 3.0 ?",
+            answers : [
         unicode"Les données sont réparties sur plusieurs nœuds sans contrôle central.",
         unicode"Toutes les données sont stockées sur un seul serveur.",
         unicode"Un seul utilisateur a le contrôle total du réseau.",
@@ -68,8 +68,8 @@ contract JavaScriptQuiz {
         }));
 
         quizzes.push(QuizLibrary.Quiz({
-            question : unicode"Quelle est la caractéristique principale d'un smart contract par rapport à un contrat traditionnel ?",
-            choices : [
+            statement : unicode"Quelle est la caractéristique principale d'un smart contract par rapport à un contrat traditionnel ?",
+            answers : [
         unicode"Il nécessite une signature manuscrite.",
         unicode"Il est exécuté automatiquement sans intermédiaire.",
         unicode"Il peut être annulé à tout moment.",
@@ -78,8 +78,8 @@ contract JavaScriptQuiz {
         }));
 
         quizzes.push(QuizLibrary.Quiz({
-            question : unicode"Quel langage de programmation est souvent utilisé pour écrire des smart contracts ?",
-            choices : [
+            statement : unicode"Quel langage de programmation est souvent utilisé pour écrire des smart contracts ?",
+            answers : [
         unicode"Python.",
         unicode"JavaScript.",
         unicode"Solidity.",
@@ -88,8 +88,8 @@ contract JavaScriptQuiz {
         }));
 
         quizzes.push(QuizLibrary.Quiz({
-            question : unicode"Qu'est-ce que Hardhat dans le contexte du développement de smart contracts ?",
-            choices : [
+            statement : unicode"Qu'est-ce que Hardhat dans le contexte du développement de smart contracts ?",
+            answers : [
         unicode"Un environnement de développement pour Ethereum.",
         unicode"Une casquette résistante.",
         unicode"Un protocole de sécurité sur Internet.",
@@ -98,8 +98,8 @@ contract JavaScriptQuiz {
         }));
 
         quizzes.push(QuizLibrary.Quiz({
-            question : unicode"Quel est le rôle principal de MetaMask dans l'écosystème Ethereum ?",
-            choices : [
+            statement : unicode"Quel est le rôle principal de MetaMask dans l'écosystème Ethereum ?",
+            answers : [
         unicode"Gérer les mots de passe des utilisateurs.",
         unicode"Faciliter l'échange de cryptomonnaies.",
         unicode"Fournir une interface utilisateur pour les smart contracts.",
@@ -107,14 +107,18 @@ contract JavaScriptQuiz {
         ]
         }));
         quizzes.push(QuizLibrary.Quiz({
-            question : unicode"Qu'est-ce que Sepolia dans le contexte du Web 3.0 ?",
-            choices : [
+            statement : unicode"Qu'est-ce que Sepolia dans le contexte du Web 3.0 ?",
+            answers : [
         unicode"Un réseau social décentralisé.",
         unicode"Un langage de programmation blockchain.",
         unicode"Un portefeuille électronique.",
         unicode"Un nouveau protocole de communication."
         ]
         }));
+    }
+
+    function getQuizzes() public view returns (QuizLibrary.Quiz[] memory) {
+        return quizzes;
     }
 
     function answerQuiz(string[] memory _responses) public {
