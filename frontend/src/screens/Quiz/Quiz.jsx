@@ -76,7 +76,7 @@ const Quiz = () => {
       <div>
         <h1>Quiz App</h1>
         <ul>{displayQuestions()}</ul>
-        <button onClick={handleSubmitAnswers}>Valider</button>
+        <button className="submit" onClick={handleSubmitAnswers}>Valider</button>
       </div>
 
       {error && <p className="error">{error}</p>}
