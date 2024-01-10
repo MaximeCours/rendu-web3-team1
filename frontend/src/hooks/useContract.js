@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import JavaScriptQuiz from "../contracts/JavaScriptQuiz.json";
+import { useLoadingStore } from "../stores/loadingStore.js";
 
 const useContract = () => {
+  const setIsLoading = useLoadingStore((state) => state.setIsLoading);
   const [accounts, setAccounts] = useState([]);
   const [contract, setContract] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const initWeb3 = async () => {
@@ -63,8 +64,8 @@ const useContract = () => {
 
   const submitAnswers = async (answers) => {
     try {
-      // Appeler la fonction du contrat pour soumettre les réponses
-      // await contract.methods.submitAnswers(answers).send({ from: 'YOUR_SENDER_ADDRESS' });
+      setIsLoading(true);
+      await contract.submitAnswers(answers);
       console.log("Answers submitted successfully!", answers);
     } catch (error) {
       console.error("Error submitting answers:", error);
@@ -72,7 +73,7 @@ const useContract = () => {
     }
   };
 
-  return { accounts, contract, loadQuestions, submitAnswers, isLoading };
+  return { accounts, contract, loadQuestions, submitAnswers };
 };
 
 export default useContract;

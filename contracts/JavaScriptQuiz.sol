@@ -12,9 +12,9 @@ contract JavaScriptQuiz {
     address private owner;
 
     event CorrectAnswer(address responder);
-    event WrongAnswer(address responder);
+    event WrongAnswer(address responder, uint goodAnswers);
 
-    constructor(bytes32[] memory _answerHash) {
+    constructor(bytes32[] _answerHash) {
         owner = msg.sender;
         answerHash = _answerHash;
         quizzes.push(QuizLibrary.Quiz({
@@ -115,26 +115,20 @@ contract JavaScriptQuiz {
         unicode"Un nouveau protocole de communication."
         ]
         }));
-
     }
 
-//    function answerQuiz(string memory _response) public {
-//        require(msg.sender != owner, "Owner cannot answer the quiz.");
-//        if (keccak256(abi.encodePacked(_response)) == answerHash) {
-//            emit CorrectAnswer(msg.sender);
-//        } else {
-//            emit WrongAnswer(msg.sender);
-//        }
-//    }
+    function answerQuiz(string[] memory _responses) public {
+        uint goodResultCount = 0;
+        for (uint i = 0; i < _responses.length; i++) {
+            if (keccak256(abi.encodePacked(_responses[i])) == answerHash[i]) {
+                goodResultCount++;
+            }
+        }
 
-//    function updateQuiz(
-//        string memory _newQuestion,
-//        string[4] memory _newChoices,
-//        bytes32 _newAnswerHash
-//    ) public {
-//        require(msg.sender == owner, "Only owner can update the quiz.");
-//        question = _newQuestion;
-//        choices = _newChoices;
-//        answerHash = _newAnswerHash;
-//    }
+        if (goodResultCount == _responses.length) {
+            emit CorrectAnswer(msg.sender);
+        } else {
+            emit WrongAnswer(msg.sender, goodResultCount);
+        }
+    }
 }
