@@ -78,7 +78,7 @@ const Quiz = () => {
 
   return (
     <>
-    {quizCompleted ? ( 
+    {!quizCompleted ? ( 
       <>
       <div>
         <h1>Quiz App</h1>
