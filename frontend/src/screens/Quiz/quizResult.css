@@ -53,7 +53,7 @@
     color: #b351b3;
   }
   
-  h3 {
+  .quiz-completed-screen h3 {
     font-size: 1em;
     margin-top: 4px;
     margin-bottom: 3px;
@@ -72,7 +72,7 @@
     justify-content: center;
   }
   
-  button {
+ .quiz-completed-screen button {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 1em;
@@ -84,7 +84,7 @@
     transition: 0.6s;
   }
   
-  button:hover {
+  .quiz-completed-screen button:hover {
     background-color: #f4f4f4; 
     color: #1e1e1e; 
  }
