@@ -1,4 +1,3 @@
-// scripts/transfer.js
 const hre = require("hardhat");
 const {ethers} = require("ethers");
 
