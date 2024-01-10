@@ -14,7 +14,7 @@ contract JavaScriptQuiz {
     event CorrectAnswer(address responder);
     event WrongAnswer(address responder, uint goodAnswers);
 
-    constructor(bytes32[] _answerHash) {
+    constructor(bytes32[] memory _answerHash) {
         owner = msg.sender;
         answerHash = _answerHash;
         quizzes.push(QuizLibrary.Quiz({
