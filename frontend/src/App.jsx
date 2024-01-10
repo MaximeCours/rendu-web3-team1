@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import LoginScreen from "./screens/Login/LoginScreen.jsx";
 import Quiz from "./screens/Quiz/Quiz.jsx";
 import useContract from "./hooks/useContract.js";
-import Modal from "./screens/Modal.jsx";
+import Modal from "./screens/modal/Modal.jsx";
 
 function App() {
   const { contract, accounts, isLoading } = useContract();
@@ -29,7 +29,7 @@ function App() {
       });
     }
   }, [contract]);
-console.log(isLoading);
+
   return (
     <>
      {isLoading && (
