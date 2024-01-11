@@ -47,12 +47,12 @@ contract JavaScriptQuiz {
         }));
 
         quizzes.push(QuizLibrary.Quiz({
-            statement: unicode"Comment fonctionne la décentralisation dans le contexte du Web 3.0 ?",
+            statement: unicode"Quelle blockchain est principalement associée à l'utilisation de smart contracts ?",
             answers: [
-        unicode"Les données sont réparties sur plusieurs nœuds sans contrôle central.",
-        unicode"Toutes les données sont stockées sur un seul serveur.",
-        unicode"Un seul utilisateur a le contrôle total du réseau.",
-        unicode"Les données sont stockées uniquement sur des serveurs gouvernementaux."
+        unicode"Bitcoin.",
+        unicode"Ethereum.",
+        unicode"Ripple.",
+        unicode"Litecoin."
         ]
         }));
 
@@ -108,7 +108,7 @@ contract JavaScriptQuiz {
         quizzes.push(QuizLibrary.Quiz({
             statement : unicode"Qu'est-ce que Sepolia dans le contexte du Web 3.0 ?",
             answers : [
-        unicode"Un réseau social décentralisé.",
+        unicode"Testnet Ethereum.",
         unicode"Un langage de programmation blockchain.",
         unicode"Un portefeuille électronique.",
         unicode"Un nouveau protocole de communication."
