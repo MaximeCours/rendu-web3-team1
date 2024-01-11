@@ -15,7 +15,7 @@ const useContract = () => {
       // On se connecte au wallet de l'utilisateur
       (async () => {
         // On prépare la connexion au smart contract
-        const contractAddress = "0x6C5bffB2a3954c9ABe696624C318C3247014Fecd";
+        const contractAddress = "0xf3BE183D1F476F86Cb788C06267dE622Aecb7C64";
         const contractABI = JavaScriptQuiz.abi;
 
         try {
