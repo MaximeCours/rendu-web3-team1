@@ -1,18 +1,10 @@
 import "./login.css";
 import metaMaskLogo from "../../assets/metamask-icon.webp";
 import quizImage from "../../assets/quiz.png";
+import useContract from "../../hooks/useContract.js";
 
 function LoginScreen() {
-  const handleLogin = async () => {
-    try {
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      console.log("Connected with MetaMask:", accounts);
-    } catch (error) {
-      console.error("Error connecting with MetaMask:", error);
-    }
-  };
+  const { handleLogin } = useContract();
 
   return (
     <div className="login">
