@@ -5,12 +5,14 @@ import useContract from "./hooks/useContract.js";
 import Modal from "./screens/modal/Modal.jsx";
 import QuizResult from "./screens/Quiz/QuizResult.jsx";
 import { useLoadingStore } from "./stores/loadingStore.js";
+import { useAccountStore } from "./stores/accountStore.js";
 
 function App() {
   const isLoading = useLoadingStore((state) => state.isLoading);
   const setIsLoading = useLoadingStore((state) => state.setIsLoading);
+  const accounts = useAccountStore((state) => state.accounts);
 
-  const { contract, accounts } = useContract();
+  const { contract } = useContract();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
