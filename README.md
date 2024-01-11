@@ -1,4 +1,5 @@
-# Javascript Quiz Web3
+#  Quiz Web3 EduVerify3.0
+[![Version](https://img.shields.io/badge/Version-v0.1.0-blue.svg)](https://semver.org/)
 
 ## Requirements
 
