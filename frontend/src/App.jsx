@@ -3,10 +3,19 @@ import LoginScreen from "./screens/Login/LoginScreen.jsx";
 import Quiz from "./screens/Quiz/Quiz.jsx";
 import useContract from "./hooks/useContract.js";
 import Modal from "./screens/modal/Modal.jsx";
+import QuizResult from "./screens/Quiz/QuizResult.jsx";
+import { useLoadingStore } from "./stores/loadingStore.js";
 
 function App() {
-  const { contract, accounts, isLoading } = useContract();
+  const isLoading = useLoadingStore((state) => state.isLoading);
+  const setIsLoading = useLoadingStore((state) => state.setIsLoading);
+
+  const { contract, accounts } = useContract();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [score, setScore] = useState(0);
+  const quizTitle = "Les bases du web3"; // mettre le nom du quiz
 
   useEffect(() => {
     // Vérifier si l'utilisateur est connecté et mettre à jour l'état
@@ -18,30 +27,27 @@ function App() {
   useEffect(() => {
     if (contract) {
       // On écoute les événements émis par le smart contract
-      contract.on("CorrectAnswer", (details) => {
-        alert("Bonne réponse : " + details);
-        console.log("Bonne réponse : ", details);
-      });
-
-      contract.on("WrongAnswer", (details) => {
-        alert("Mauvaise réponse : " + details);
-        console.log("Mauvaise réponse : ", details);
+      contract.on("AnswerResult", (details) => {
+        setQuizCompleted(true);
+        setIsLoading(false);
+        setScore(parseInt(details.toString()) * 10);
       });
     }
   }, [contract]);
 
-  return (
-    <>
-     {isLoading && (
-        <Modal/>     
-      )}
-      {isLoggedIn ? (
-        <Quiz />
-      ) : (
-        <LoginScreen onLogin={() => setIsLoggedIn(true)} />
-      )}
-    </>
-  );
+  if (isLoading) {
+    return <Modal />;
+  }
+
+  if (quizCompleted) {
+    return <QuizResult quizTitle={quizTitle} score={score} />;
+  }
+
+  if (isLoggedIn) {
+    return <Quiz />;
+  }
+
+  return <LoginScreen onLogin={() => setIsLoggedIn(true)} />;
 }
 
 export default App;

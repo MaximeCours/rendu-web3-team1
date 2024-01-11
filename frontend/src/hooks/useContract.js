@@ -1,59 +1,51 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import JavaScriptQuiz from "../contracts/JavaScriptQuiz.json";
+import { useLoadingStore } from "../stores/loadingStore.js";
+import { useContractStore } from "../stores/contractStore.js";
 
 const useContract = () => {
+  const setIsLoading = useLoadingStore((state) => state.setIsLoading);
+  const contract = useContractStore((state) => state.contract);
+  const setContract = useContractStore((state) => state.setContract);
   const [accounts, setAccounts] = useState([]);
-  const [contract, setContract] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const initWeb3 = async () => {
-      // On prépare la connexion au smart contract
-      const contractAddress = "0xE0cBcC25251Ab3888e008BB2E745767eaa2b8b5d";
-      const contractABI = JavaScriptQuiz.abi;
+    if (!contract) {
+      // On se connecte au wallet de l'utilisateur
+      (async () => {
+        // On prépare la connexion au smart contract
+        const contractAddress = "0x384478381f7852f839006Cf6D07Db6Ac2363E003";
+        const contractABI = JavaScriptQuiz.abi;
 
-      try {
-        // On se connecte au wallet de l'utilisateur
-        setIsLoading(true);
+        try {
+          // On se connecte au wallet de l'utilisateur
+          setIsLoading(true);
 
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        setAccounts(accounts);
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        const contract = new ethers.Contract(
-          contractAddress,
-          contractABI,
-          signer
-        );
-        setContract(contract);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        console.error(error);
-      }
-    };
-
-    initWeb3();
+          const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+          setAccounts(accounts);
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const signer = await provider.getSigner();
+          const contract = new ethers.Contract(
+            contractAddress,
+            contractABI,
+            signer
+          );
+          setContract(contract);
+          setIsLoading(false);
+        } catch (error) {
+          setIsLoading(false);
+          console.error(error);
+        }
+      })();
+    }
   }, []);
 
   const loadQuestions = async () => {
     try {
-      const loadedQuestions = [
-        {
-          statement:
-            "Quelle est la valeur de la variable y après l'exécution de ce code ?",
-          answers: ["1", "2", "3", "4"],
-        },
-        {
-          statement:
-            "Quelle est la valeur de la variable x après l'exécution de ce code ?",
-          answers: ["7", "9", "2", "4"],
-        },
-      ];
-
+      const loadedQuestions = await contract.getQuizzes();
       return loadedQuestions;
     } catch (error) {
       console.error("Error loading questions:", error);
@@ -63,16 +55,15 @@ const useContract = () => {
 
   const submitAnswers = async (answers) => {
     try {
-      // Appeler la fonction du contrat pour soumettre les réponses
-      // await contract.methods.submitAnswers(answers).send({ from: 'YOUR_SENDER_ADDRESS' });
-      console.log("Answers submitted successfully!", answers);
+      setIsLoading(true);
+      await contract.answerQuiz(answers);
     } catch (error) {
       console.error("Error submitting answers:", error);
       throw error;
     }
   };
 
-  return { accounts, contract, loadQuestions, submitAnswers, isLoading };
+  return { accounts, contract, loadQuestions, submitAnswers };
 };
 
 export default useContract;

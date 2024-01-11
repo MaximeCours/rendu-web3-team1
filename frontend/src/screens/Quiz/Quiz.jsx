@@ -1,19 +1,13 @@
 import { useEffect, useState } from "react";
 import useContract from "../../hooks/useContract.js";
 import "./quiz.css";
-import QuizResult from "./QuizResult.jsx";
 
 const Quiz = () => {
-  const { accounts, contract, loadQuestions, submitAnswers } = useContract();
+  const { contract, loadQuestions, submitAnswers } = useContract();
   const [questions, setQuestions] = useState([]);
   const [selectedChoices, setSelectedChoices] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [error, setError] = useState("");
-  const [quizCompleted, setQuizCompleted] = useState(false);
-  const quizTitle = "Les bases du web3"; // mettre le nom du quiz
-  const timeTaken = 100; // mettre le temps reel
-  const score = 100; // mettre le score reel
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,8 +37,9 @@ const Quiz = () => {
 
   const handleSubmitAnswers = async () => {
     try {
-      await submitAnswers(answers);
-      alert(`Answers submitted successfully! ${answers}`);
+      await submitAnswers(
+        selectedChoices.map((choice, index) => `${index}-${choice}`)
+      );
       setError("");
     } catch (error) {
       setError(error.message);
@@ -78,8 +73,6 @@ const Quiz = () => {
 
   return (
     <>
-    {!quizCompleted ? ( 
-      <>
       <div>
         <h1>Quiz App</h1>
         <ul>{displayQuestions()}</ul>
@@ -87,10 +80,6 @@ const Quiz = () => {
       </div>
 
       {error && <p className="error">{error}</p>}
-      </>
-      ) : (
-        <QuizResult quizTitle={quizTitle} score={score} timeTaken={timeTaken} />
-      )}
     </>
   );
 };
