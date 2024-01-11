@@ -15,7 +15,7 @@ const useContract = () => {
       // On se connecte au wallet de l'utilisateur
       (async () => {
         // On prépare la connexion au smart contract
-        const contractAddress = "0xE0cBcC25251Ab3888e008BB2E745767eaa2b8b5d";
+        const contractAddress = "0x384478381f7852f839006Cf6D07Db6Ac2363E003";
         const contractABI = JavaScriptQuiz.abi;
 
         try {
@@ -45,8 +45,7 @@ const useContract = () => {
 
   const loadQuestions = async () => {
     try {
-      const loadedQuestions = contract.getQuizzes();
-      console.log(loadedQuestions);
+      const loadedQuestions = await contract.getQuizzes();
       return loadedQuestions;
     } catch (error) {
       console.error("Error loading questions:", error);
@@ -57,8 +56,7 @@ const useContract = () => {
   const submitAnswers = async (answers) => {
     try {
       setIsLoading(true);
-      await contract.submitAnswers(answers);
-      console.log("Answers submitted successfully!", answers);
+      await contract.answerQuiz(answers);
     } catch (error) {
       console.error("Error submitting answers:", error);
       throw error;

@@ -11,8 +11,7 @@ contract JavaScriptQuiz {
     bytes32[] private answerHash;
     address private owner;
 
-    event CorrectAnswer(address responder);
-    event WrongAnswer(address responder, uint goodAnswers);
+    event AnswerResult(uint goodAnswers);
 
     constructor(bytes32[] memory _answerHash) {
         owner = msg.sender;
@@ -129,10 +128,6 @@ contract JavaScriptQuiz {
             }
         }
 
-        if (goodResultCount == _responses.length) {
-            emit CorrectAnswer(msg.sender);
-        } else {
-            emit WrongAnswer(msg.sender, goodResultCount);
-        }
+        emit AnswerResult(goodResultCount);
     }
 }

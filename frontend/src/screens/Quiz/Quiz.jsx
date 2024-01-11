@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useContract from "../../hooks/useContract.js";
 import "./quiz.css";
-import QuizResult from "./QuizResult.jsx";
 
 const Quiz = () => {
   const { contract, loadQuestions, submitAnswers } = useContract();
@@ -38,8 +37,9 @@ const Quiz = () => {
 
   const handleSubmitAnswers = async () => {
     try {
-      await submitAnswers(answers);
-      alert(`Answers submitted successfully! ${answers}`);
+      await submitAnswers(
+        selectedChoices.map((choice, index) => `${index}-${choice}`)
+      );
       setError("");
     } catch (error) {
       setError(error.message);
